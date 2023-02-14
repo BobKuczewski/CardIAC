@@ -33,7 +33,7 @@ instructions.
 This repository only contains a few files. There is one HTML file, one "README" file
 (the source of this page) and several image files. The HTML file contains the Javascript
 that loads the images and provides for input, output, and movement of the images on the
-page. Simply download those files to any location on your computer and open the HTML
+page. Simply download those files to any location on your computer and open the only HTML
 file (cardiac_b.html) with a web browser (usually by double clicking on it). That
 should bring up a page similar to the image above. Then follow along with the example
 below or any of the examples available on the Internet.
@@ -294,3 +294,29 @@ The instructions of CardIAC (such as IN, STO, ADD, SUB, JMP) are very similar to
 But CardIAC goes one level deeper and shows how each of those "macro" instructions are made up of several "micro-instructions"
 such as "fetch an instruction", "increment the program counter", and "move" data. The process is certainly tedious, but it
 demonstrates the building blocks of all modern digital computers.
+
+## Additional Features of CardIAC-B
+
+The previous example provides most of the information needed to operate CardIAC-B. However, there are a few other helpful features that will be explained here.
+
+### Managing Input and Output
+
+Input data and output data are handled as "cards" by CardIAC. In the old days, cards were a common form of interaction with a computer and a program (as well as input data) would often be entered as a series (or "deck") of punched cards. The Input and Output sliders reflect that perspective and that's why they have the upper left corner "cut off" to look like very small punch cards.
+
+Data is loaded into these cards by clicking on the words "INPUT" or "OUTPUT". Both will bring up a dialog box showing the current data and the ability to enter data. But the data for input and output differ. The data entered for input can contain multiple space-separated values, and those values will replace the **entire** set of "cards" on the slider. But placing data on the output card should only happen through the "OUT" instruction. As a result, new values are entered on to the Output cards one at a time as directed by the program. So there should be no need to enter multiple values at once for Output. Both dialog boxes provide an option to clear the entire card with a single "x" as input. In all cases, it can be helpful to use your computer's cut, copy, and paste features to save and restore copies of the input and output cards as needed. Clicking on either the "INPUT" or "OUTPUT" will initially show all of the data for those cards for easy copying and saving.
+
+### The Accumulator
+
+The Accumulator is really just a place to store a number. The value entered there is not used by CardIAC-B in any way other than to ask you (the real brains of the operation) to change it appropriately. You can change the Accumulator by clicking on the word "ACCUMULATOR" or the box that holds the number.
+
+### The "Bug" (Program Counter)
+
+As with the Accumulator, the "Bug" is not used by CardIAC-B in any way other than to ask you (again, the real brains of the operation) to use it as a reference for fetching instructions. You can change the location of the "Bug" by clicking on the small circles at each location of the memory. In the original "CardIAC", those circles were holes where the "Bug" could be slid to keep track of the next program instruction.
+
+### Memory - Individual Cells and Bulk Reading and Writing
+
+The memory of CardIAC is used for storing both programs and data. In fact, program instructions can be read (as data) and data can be executed (as program instructions). Keeping all of this straight is the job of the programmer (you). Memory is normally changed by clicking on the yellow rectangle in each memory cell. This will bring up a dialog box giving you the option to change the value or clear it completely (with an "x"). This is sufficient for small programs, but would be extremely tedious for large programs (of course, executing large programs would be even *more* tedious). So CardIAC-B has a mechanism for bulk reading and writing of memory. If you click on either of the words "MEMORY" or "CELLS" above the memory area, you will get a pop-up dialog box containing all of the space separated values currently in memory. Any blank cells will be represented with a single underscore ("_"). This allows you to copy and paste all of memory at once. It also allows you to copy and paste to restore all of memory at once. Finally, this makes it relatively easy to shift sections of memory by inserting or deleting cell values in the list.
+
+### Behind the Curtain
+
+The original CardIAC computer was a very very clever idea, and it surely took considerable thought and effort to make all the sliders work in conjunction with each other to produce a "working" computer. CardIAC-B allows you to see the movement of these sliders by toggling on the "bell" in the lower right corner. This essentially replaces the front panel with a transparent image that lets you see the sliders moving. The transparent image also shows the locations of the cutouts of the normal front panel for reference. Additionally, when in "transparent" mode, the sliders change color so they can be differentiated (since they have no borders and would otherwise blend together).
