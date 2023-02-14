@@ -5,19 +5,22 @@
 The CardIAC computer was created by David Hagelbarger at Bell Labs in the early
 1960's. At that time, real computers were very expensive and very rare. So David
 Hagelbarger designed a ***Card***board ***I***llustrative ***A***id to ***C***omputation named
-"CardIAC". The "computer" was printed and distributed for educational use, and
-fortunately some have survived to this day (see extensive documentation by Brian
+"CardIAC". The "computer" was printed (on cardboard) and distributed for educational use.
+Fortunately some of these have survived to this day (see extensive documentation by Brian
 Stuart in the [CardIAC section of his computer museum](https://www.cs.drexel.edu/~bls96/museum/cardiac.html)).
-There are also CardIAC resources available at [Wikipedia](https://en.wikipedia.org/wiki/CARDboard_Illustrative_Aid_to_Computation)
-and a "do it yourself" version at [Instructables](https://www.instructables.com/CARDIAC-CARDboard-Illustrative-Aid-to-Computation-/).
+There are also CardIAC resources available on line at [Wikipedia](https://en.wikipedia.org/wiki/CARDboard_Illustrative_Aid_to_Computation)
+and even a "print it yourself" version at [Instructables](https://www.instructables.com/CARDIAC-CARDboard-Illustrative-Aid-to-Computation-/).
 
 This project implements the CardIAC computer using "virtual cardboard" made of
-images that can be slid up and down just like the original CardIAC computer. The
+images that can be slid up and down just like the original CardIAC computer. This
 project is implemented in Javascript within an HTML file so it should run in
 most modern web browsers. This Javascript version is technically named "CardIAC-B"
 because it has some small differences from the original Bell Labs cardboard "CardIAC"
 computer. But those differences are relatively minor, and most of this documentation
-will use the terms "CardIAC" and "CardIAC-B" interchangably.
+will use the terms "CardIAC" and "CardIAC-B" interchangably. The numeric instruction
+set is identical and all CardIAC programs should run identically on CardIAC-B. There
+are also a number of other CardIAC simulations that use the CardIAC instruction set
+but do not implement the "virtual cardboard" of this current project.
 
 ## "Virtual Cardboard" Version
 
