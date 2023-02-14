@@ -6,7 +6,8 @@ The CardIAC computer was created by David Hagelbarger at Bell Labs in the early
 1960's. At that time, real computers were very expensive and very rare. So David
 Hagelbarger designed a *Card*board *I*llustrative *A*id to *C*omputation named
 "CardIAC". The "computer" was printed and distributed for educational use, and
-fortunately some have survived to this day (see ...).
+fortunately some have survived to this day (see extensive documentation by Brian
+Stuart at https://www.cs.drexel.edu/~bls96/museum/cardiac.html).
 
 This project implements the CardIAC computer using "virtual cardboard" made of
 images that can be slid up and down just like the original CardIAC computer. The
