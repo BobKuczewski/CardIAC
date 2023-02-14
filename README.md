@@ -28,7 +28,17 @@ instructions.
 
 ![Screen Shot](/CardIAC_at_Startup.png?raw=true "Startup Screen")
 
-## Simple Programming Example 1 - Add two numbers
+## Using CardIAC-B
+
+This repository only contains a few files. There is one HTML file, one "README" file
+(the source of this page) and several image files. The HTML file contains the Javascript
+that loads the images and provides for input, output, and movement of the images on the
+page. Simply download those files to any location on your computer and open the HTML
+file (cardiac_b.html) with a web browser (usually by double clicking on it). That
+should bring up a page similar to the image above. Then follow along with the example
+below or any of the examples available on the Internet.
+
+## Simple Programming Example - Add two numbers (the hard way)
 
 This tutorial will walk you through writing and executing a simple program
 to add two numbers using CardIAC-B. Most of the important controls are
