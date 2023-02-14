@@ -30,6 +30,10 @@ instructions.
 
 ## Simple Programming Example 1 - Add two numbers
 
+This tutorial will walk you through writing and executing a simple program
+using CardIAC-B. Most of the important controls are exercised in this short
+demonstration.
+
 Start by picking two numbers to add. We'll use 14 and 28 (following the
 example by Ben Eater at https://youtu.be/35zLnS3fXeA).
 
@@ -223,3 +227,13 @@ moved forward one cell (to 07 in this case). Then following the flow diagram to 
 says "MOVE BUG TO CELL 00 STOP". So we click on the "hole" for memory cell 00 to move the bug and we
 can finally ... stop.
 
+Once the program has been written and entered (as it has been in this tutorial), new input values can be entered, and the
+program can be run again. Indeed, with a few small changes, this program could loop back to the beginning and continue to
+add pairs of numbers (taking them from the input cards) and produce a list of sums (to the output cards). But that's
+not really the best use of this "virtual cardboard" computer. The best use is to understand the fundamental notions of how a
+set of stored computer instructions can be cycled through a very simple machine to process data (including input and output).
+
+The instructions of CardIAC (such as IN, STO, ADD, SUB, JMP) are very similar to the instructions of real computers.
+But CardIAC goes one level deeper and shows how each of those "macro" instructions are made up of several "micro-instructions"
+such as "fetch an instruction", "increment the program counter", and "move" data. The process is certainly tedious, but it
+demonstrates the building blocks of all modern digital computers.
