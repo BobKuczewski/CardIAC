@@ -19,8 +19,10 @@ because it has some small differences from the original Bell Labs cardboard "Car
 computer. But those differences are relatively minor, and most of this documentation
 will use the terms "CardIAC" and "CardIAC-B" interchangably. The numeric instruction
 set is identical and all CardIAC programs should run identically on CardIAC-B. There
-are also a number of other CardIAC simulations that use the CardIAC instruction set
-but do not implement the "virtual cardboard" of this current project.
+are also a number of other CardIAC-like simulations that use the CardIAC instruction set
+or slight variants. For example, the "Instructional Manual for CardIAC" makes several
+references a machine called "SIMCO" which uses the same 10 "binary" (actually decimal)
+instructions.
 
 ## "Virtual Cardboard" Version
 
