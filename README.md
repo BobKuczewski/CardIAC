@@ -24,7 +24,7 @@ or slight variants. For example, the "Instructional Manual for CardIAC" makes se
 references a machine called "SIMCO" which uses the same 10 "binary" (actually decimal)
 instructions.
 
-## "Virtual Cardboard" Version
+## "Virtual Cardboard" Version [Link](https://bobkuczewski.github.io/CardIACBPages/)
 
 ![Screen Shot](/CardIAC_at_Startup.png?raw=true "Startup Screen")
 
