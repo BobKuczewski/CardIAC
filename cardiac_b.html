@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+<!--
+This software is made freely available under the
+terms of the GNU GENERAL PUBLIC LICENSE Version 3,
+dated 29 June 2007 and available here:
+   https://www.gnu.org/licenses/gpl-3.0.txt
+-->
+
+<html>
+
+<head>
+
+<title>CARDIAC-B Paper Simulation</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script>
+
+// These values are based on the images used
+
+var num_mem_cols = 6;
+var min_mem_col = 750  -(50+40);
+var max_mem_col = 1136  -(50+40);
+var num_mem_rows = 17;
+var min_mem_row = 128;
+var max_mem_row = 522;
+
+var mem_txt_x_offset = 809  -(50+40);
+var mem_txt_y_offset = 118;
+var mem_txt_box_y_offset = 19;
+var mem_txt_w = 41;
+var mem_txt_h = 21;
+var mem_x_min = 683;
+var mem_x_max = 987;
+var mem_y_min = 70;
+var mem_y_max = 97;
+
+var acc_x = 187  -40;
+var acc_y = 477;
+var datacard_ox = 8;
+var datacard_oy = 450;
+var datacard_dy = 16.72;
+
+var io_cover_x = 0;
+var io_cover_y = 0;
+var io_cover_min_y = -20;
+var io_cover_max_y = 560;
+
+var output_slider_x = 670  -(40+40);
+var output_slider_y = -8;
+var output_slider_min_y = 78;
+var output_slider_max_y = 465;
+var output_x_min = 658  -(40+40);
+var output_x_max = 736  -(40+40);
+var output_y_min = 492;
+var output_y_max = 534;
+
+var input_slider_x = 61  -40;
+var input_slider_y = -8;
+var input_slider_min_y = 78;
+var input_slider_max_y = 465;
+var input_x_min = 18;
+var input_x_max = 85;
+var input_y_min = 492;
+var input_y_max = 534;
+
+var low_addr_slider_x = 484  -40;
+var low_addr_slider_y = -8;
+var low_addr_slider_min_y = -108;
+var low_addr_slider_max_y = 28;
+
+var high_addr_slider_x = 383  -40;
+var high_addr_slider_y = -8;
+var high_addr_slider_min_y = -108;
+var high_addr_slider_max_y = 28;
+
+var opcode_slider_x = 278  -40;
+var opcode_slider_y = 10;
+var opcode_slider_min_y = -102;
+var opcode_slider_max_y = 36;
+
+var acc_test_slider_x = 155  -40;
+var acc_test_slider_y = 0;
+var acc_test_slider_min_y = 2;
+var acc_test_slider_max_y = 31;
+var acc_x_min = 187  -40;
+var acc_x_max = 270  -40;
+var acc_y_min = 455;
+var acc_y_max = 476;
+
+var bug_slider_x = 748  -(50+40);
+var bug_slider_y = 123;
+var bug_slider_min_y = 123;
+var bug_slider_max_y = 123;
+
+var bug_thresh_squared = 144;
+
+var transparent = false;
+
+
+function dec3 ( v ) {
+  d = 0;
+  if (v >= 0) {
+	  d = (v % 1000).toString(10).toUpperCase();
+	  while (d.length < 3) {
+		  d = "0" + d;
+	  }
+	} else {
+	  d = ((-v) % 100).toString(10).toUpperCase();
+	  while (d.length < 2) {
+		  d = "0" + d;
+	  }
+	  d = "-" + d;
+	}
+	return ( d );
+}
+
+function dec4 ( v ) {
+  d = 0;
+  if (v >= 0) {
+	  d = (v % 10000).toString(10).toUpperCase();
+	  while (d.length < 4) {
+		  d = "0" + d;
+	  }
+	} else {
+	  d = ((-v) % 1000).toString(10).toUpperCase();
+	  while (d.length < 3) {
+		  d = "0" + d;
+	  }
+	  d = "-" + d;
+	}
+	return ( d );
+}
+
+class MemCell {
+  constructor () {
+    this.empty = true;
+    this.value = 0;
+  }
+  set_value ( val ) {
+    this.value = val;
+    this.empty = false;
+  }
+  get_value () {
+    return (this.value);
+  }
+  is_empty () {
+    return (this.empty);
+  }
+  set_empty () {
+    this.empty = true;
+  }
+}
+
+class Memory {
+  constructor () {
+    this.mem = [];
+    for (let i=0; i<=99; i++) {
+      this.mem.push ( new MemCell() );
+    }
+    this.mem[0].set_value ( 1 );
+  }
+  to_string () {
+    let ms = "";
+    for (let i=0; i<this.mem.length; i++) {
+      if (this.mem[i].is_empty()) {
+        ms = ms + "_ ";
+      } else {
+        ms = ms + this.mem[i].value + " ";
+      }
+    }
+    return (ms.trim());
+  }
+  from_string ( memory_string ) {
+    let ms = memory_string.replace(/\s+/g,' ').trim().split(' '); // Convert to an array
+    let next_addr = 0;
+    for (let i=0; i<ms.length; i++) {
+      if (next_addr <= 99) {
+        // There's room in memory for another value
+        if (ms[i].indexOf(":") >= 0) {
+          // This is an address, so do nothing (or possibly change next_addr)
+        } else {
+          // This is a value to store in memory
+          let nm = new MemCell();
+          if (ms[i] == '_') {
+            // This is an empty location
+            nm.set_empty();
+          } else {
+            // Assume that this is a decimal number
+            let nn = Number(ms[i]);
+            if (isNaN(nn)) {
+              nm.set_empty();
+            } else {
+              nm.set_value(nn);
+            }
+          }
+          this.mem[next_addr] = nm;
+          next_addr = next_addr + 1;
+        }
+      }
+    }
+  }
+  draw (ctxt) {
+    let dcol = (max_mem_col-min_mem_col) / (num_mem_cols-1);
+    let drow = (max_mem_row-min_mem_row) / (num_mem_rows-1);
+    let addr = 0;
+    for (let col=0; col<num_mem_cols; col++) {
+      for (let row=0; row<num_mem_rows; row++) {
+        if (addr < this.mem.length) {
+          ctxt.fillStyle = "#ffffcc";
+          ctxt.fillRect(mem_txt_x_offset+(col*dcol),mem_txt_y_offset+(row*drow),mem_txt_w,mem_txt_h);
+          ctxt.font = "bold 20px Courier";
+          ctxt.fillStyle = "#000000";
+          if (!this.mem[addr].is_empty()) {
+            ctxt.fillText ( dec3(this.mem[addr].value), 1+mem_txt_x_offset+(col*dcol),mem_txt_box_y_offset+mem_txt_y_offset+(row*drow) );
+          }
+          addr += 1;
+        }
+      }
+    }
+  }
+}
+
+mem = new Memory();
+acc = 0;
+
+class SlidingImage {
+  constructor(name,image_name,offset_x,offset_y,min_y,max_y,num_notches) {
+    this.obj_name = name;
+    this.image_name = image_name;
+    this.transp_image_name = null;
+    this.transp_loaded = false;
+    this.transp_image = new Image();
+    this.offset_x = offset_x;
+    this.offset_y = offset_y;
+    this.dynamic_y = 0;
+    this.image_loaded = false;
+    this.image = new Image();
+    this.min_y = min_y;
+    this.max_y = max_y;
+    this.selection_offset_x = 0;
+    this.selection_offset_y = 0;
+    this.notches = null;
+    this.closest_notched_y = 0;
+    this.num_notches = num_notches
+    if (this.num_notches > 1) {
+      this.notches = [];
+      for (let i=0; i<this.num_notches; i++) {
+        this.notches.push ( this.min_y + Math.round(i*(this.max_y - this.min_y)/(this.num_notches-1)) );
+      }
+    }
+  }
+  draw_text(ctxt, x, y) {
+  }
+  draw (ctxt) {
+    if (this.image_loaded) {
+      if (this.obj_name == "xxx") {
+        console.log ( " " + this.obj_name + " offset_y = " + this.offset_y );
+        console.log ( " " + this.obj_name + " dynamic_y = " + this.dynamic_y );
+        console.log ( " " + this.obj_name + " selection_offset_y = " + this.selection_offset_y );
+        console.log ( " " + this.obj_name + " notches = " + this.notches );
+      }
+      let y = this.offset_y+this.dynamic_y;
+      if (y < this.min_y) y = this.min_y;
+      if (y > this.max_y) y = this.max_y;
+      this.dynamic_y = y - this.offset_y;
+      if ( ((active_slider == this) && mouse_is_down) || (this.notches==null) || (this.notches.length<=0) ) {
+        // Draw at current mouse position
+        if (transparent && this.transp_loaded) {
+          ctxt.drawImage ( this.transp_image, this.offset_x+this.selection_offset_x, y+this.selection_offset_y );
+        } else {
+          ctxt.drawImage ( this.image, this.offset_x+this.selection_offset_x, y+this.selection_offset_y );
+        }
+        this.draw_text ( ctxt, this.offset_x+this.selection_offset_x, y+this.selection_offset_y );
+      } else {
+        // Snap to one of the predefined "notches"
+        // console.log ( "Drawing with notches = " + this.notches );
+        let desired_y = y+this.selection_offset_y;
+        this.closest_notched_y = this.notches[0];
+        for (let i=0; i<this.notches.length; i++) {
+          if (Math.abs(desired_y - this.notches[i]) <= Math.abs(desired_y - this.closest_notched_y)) {
+            this.closest_notched_y = this.notches[i];
+            // console.log ( "Snapping to " + this.closest_notched_y );
+          }
+        }
+        if (transparent && this.transp_loaded) {
+          ctxt.drawImage ( this.transp_image, this.offset_x+this.selection_offset_x, this.closest_notched_y );
+        } else {
+          ctxt.drawImage ( this.image, this.offset_x+this.selection_offset_x, this.closest_notched_y );
+        }
+        this.draw_text ( ctxt, this.offset_x+this.selection_offset_x, this.closest_notched_y );
+      }
+    }
+  }
+}
+
+class DataCard extends SlidingImage {
+  constructor(name,image_name,offset_x,offset_y,min_y,max_y,num_notches) {
+    super ( name, image_name, offset_x, offset_y, min_y,max_y, num_notches );
+    this.slots = [];
+    this.num_slots_used = 0;
+  }
+  draw_text(ctxt, x, y) {
+    ctxt.fillStyle = "#ffffcc";
+    ctxt.font = "bold 17px Courier";
+    ctxt.fillStyle = "#000000";
+    for (let i=0; i<this.num_slots_used; i++) {
+      ctxt.fillText ( dec3(this.slots[i]), datacard_ox+x, datacard_oy+y+(datacard_dy*-i) );
+      // ctxt.fillText ( dec3(this.slots[i]),    datacard_ox+this.offset_x+this.selection_offset_x, datacard_oy+this.closest_notched_y+(datacard_dy*-i)  );
+      // ctxt.fillText ( dec3(this.slots[i]), datacard_ox+this.offset_x+this.selection_offset_x, datacard_oy+y+this.selection_offset_y+(datacard_dy*-i) );
+    }
+  }
+  draw (ctxt) {
+    super.draw(ctxt);
+  }
+}
+
+var io_cover = new SlidingImage ( "io_cover", 'IOCOV.png', io_cover_x, io_cover_y, io_cover_min_y, io_cover_max_y, 0 );
+io_cover.image.onload = function () { io_cover.image_loaded = true; };
+io_cover.image.src = io_cover.image_name;
+
+var output_slider = new DataCard ( "output", 'INOUT.png', output_slider_x, output_slider_y, output_slider_min_y, output_slider_max_y, 24 );
+output_slider.image.onload = function () { output_slider.image_loaded = true; };
+output_slider.image.src = output_slider.image_name;
+
+var input_slider = new DataCard ( "input", 'INOUT.png', input_slider_x, input_slider_y, input_slider_min_y, input_slider_max_y, 24 );
+input_slider.image.onload = function () { input_slider.image_loaded = true; };
+input_slider.image.src = input_slider.image_name;
+
+var low_addr_slider = new SlidingImage ( "low_addr", 'ADDR_LO.png', low_addr_slider_x, low_addr_slider_y, low_addr_slider_min_y, low_addr_slider_max_y, 10 );
+low_addr_slider.image.onload = function () { low_addr_slider.image_loaded = true; };
+low_addr_slider.image.src = low_addr_slider.image_name;
+low_addr_slider.transp_image_name = "ADDR_LO_Blue.png";
+low_addr_slider.transp_image.onload = function () { console.log("Loaded Transp"); low_addr_slider.transp_loaded = true; };
+low_addr_slider.transp_image.src = low_addr_slider.transp_image_name;
+
+var high_addr_slider = new SlidingImage ( "high_addr", 'ADDR_HI.png', high_addr_slider_x, high_addr_slider_y, high_addr_slider_min_y, high_addr_slider_max_y, 10 );
+high_addr_slider.image.onload = function () { console.log("Loaded Normal");  high_addr_slider.image_loaded = true; };
+high_addr_slider.image.src = high_addr_slider.image_name;
+high_addr_slider.transp_image_name = "ADDR_HI_Pink.png";
+high_addr_slider.transp_image.onload = function () { console.log("Loaded Transp"); high_addr_slider.transp_loaded = true; };
+high_addr_slider.transp_image.src = high_addr_slider.transp_image_name;
+
+var opcode_slider = new SlidingImage ( "opcode", 'OPCODE.png', opcode_slider_x, opcode_slider_y, opcode_slider_min_y, opcode_slider_max_y, 10 );
+opcode_slider.image.onload = function () { opcode_slider.image_loaded = true; };
+opcode_slider.image.src = opcode_slider.image_name;
+
+var acc_test_slider = new SlidingImage ( "acc_test", 'ACC.png', acc_test_slider_x, acc_test_slider_y, acc_test_slider_min_y, acc_test_slider_max_y, 2 );
+acc_test_slider.image.onload = function () { acc_test_slider.image_loaded = true; };
+acc_test_slider.image.src = acc_test_slider.image_name;
+acc_test_slider.transp_image_name = "ACC_Green.png";
+acc_test_slider.transp_image.onload = function () { console.log("Loaded Transp"); acc_test_slider.transp_loaded = true; };
+acc_test_slider.transp_image.src = acc_test_slider.transp_image_name;
+
+var bug = new SlidingImage ( "bug", 'BUG.png', bug_slider_x, bug_slider_y, bug_slider_min_y, bug_slider_max_y, 0 );
+bug.image.onload = function () { bug.image_loaded = true; };
+bug.image.src = bug.image_name;
+
+
+var computer_image_name = 'COMP.png';
+var computer_image = new Image();
+var computer_image_loaded = false;
+
+var trans_comp_image_name = 'COMP_X.png';
+var trans_comp_image = new Image();
+var trans_comp_image_loaded = false;
+
+var trans_addrhi_image_name = 'ADDR_HI_Pink.png';
+var trans_addrhi_image = new Image();
+var trans_addrhi_image_loaded = false;
+
+var trans_addrlo_image_name = 'ADDR_LO_Blue.png';
+var trans_addrlo_image = new Image();
+var trans_addrlo_image_loaded = false;
+
+var trans_acc_image_name = 'ACC_Green.png';
+var trans_acc_image = new Image();
+var trans_acc_image_loaded = false;
+
+var drawing_area = null;
+
+function draw_computer() {
+  let drawing_area = document.getElementById('drawing_area');
+  if (drawing_area != null) {
+    let ctxt = drawing_area.getContext('2d');
+
+    // Fill the Entire Drawing Area
+    ctxt.fillStyle = "#444444";
+    ctxt.fillRect(0,0,drawing_area.width,drawing_area.height);
+
+    // Draw the sliders from back to front
+    low_addr_slider.draw(ctxt);
+    high_addr_slider.draw(ctxt);
+    acc_test_slider.draw(ctxt);
+    opcode_slider.draw(ctxt);
+
+    // Draw the computer (in front of all sliders)
+    if (transparent) {
+      if (trans_comp_image_loaded) {
+        ctxt.drawImage(trans_comp_image,0,0);
+      }
+    } else {
+      if (computer_image_loaded) {
+        ctxt.drawImage(computer_image,0,0);
+      }
+    }
+
+    // Draw the input/output sliders on top of the computer
+    input_slider.draw(ctxt);
+    output_slider.draw(ctxt);
+
+    // Draw the input/output cover on top of the sliders
+    io_cover.draw(ctxt);
+
+    // Draw the memory
+    mem.draw(ctxt);
+
+    // Draw the memory bug
+    bug.draw(ctxt);
+
+    // Draw the accumulator
+    ctxt.fillStyle = "#ffffcc";
+    ctxt.font = "bold 29px Courier";
+    ctxt.fillStyle = "#000000";
+    ctxt.fillText ( dec4(acc), acc_x, acc_y );
+  }
+}
+
+function reload_page() {
+  drawing_area = document.getElementById('drawing_area');
+  if (drawing_area != null) {
+    var ctxt = drawing_area.getContext('2d');
+    computer_image.onload = function () {
+      computer_image_loaded = true;
+      drawing_area.width = computer_image.width;
+      drawing_area.height = computer_image.height;
+      draw_computer();
+    };
+    computer_image.src = computer_image_name;
+
+    trans_comp_image.onload = function () {
+      trans_comp_image_loaded = true;
+      draw_computer();
+    };
+    trans_comp_image.src = trans_comp_image_name;
+
+  }
+}
+
+function get_offsets ( event ) {
+  // This function is needed on FireFox because offsetX and offsetY are not correct.
+  // Normal event coords: screenX, screenY, pageX, pageY, clientX, clientY, offsetX, offsetY
+  var offsets = [];
+  var target = event.target || event.srcElement;
+  var rect = target.getBoundingClientRect();
+  var offsetX = event.clientX - rect.left;
+  var offsetY = event.clientY - rect.top;
+  offsets = [offsetX, offsetY];
+  return offsets;
+}
+
+
+var mouse_is_down = false;
+var mouse_down_x = 0;
+var mouse_down_y = 0;
+var active_slider = null;
+
+function move_bug ( mouse_down_x, mouse_down_y ) {
+  // Find the closest memory cell selector
+  mouse_down_x = mouse_down_x - 51;
+  let dcol = (max_mem_col-min_mem_col) / (num_mem_cols-1);
+  let closest_col = 0;
+  let closest_col_dist = Math.abs(max_mem_col-min_mem_col);
+  for (let i=0; i<num_mem_cols; i++) {
+    if (Math.abs(mouse_down_x-(min_mem_col+(i*dcol))) < closest_col_dist) {
+      closest_col = i;
+      closest_col_dist = Math.abs(mouse_down_x-(min_mem_col+(i*dcol)));
+    }
+  }
+  let drow = (max_mem_row-min_mem_row) / (num_mem_rows-1);
+  let closest_row = 0;
+  let closest_row_dist = Math.abs(max_mem_row-min_mem_row);
+  for (let i=0; i<num_mem_rows; i++) {
+    if (Math.abs(mouse_down_y-(min_mem_row+(i*drow))) < closest_row_dist) {
+      closest_row = i;
+      closest_row_dist = Math.abs(mouse_down_y-(min_mem_row+(i*drow)));
+    }
+  }
+  if ( ( (closest_row_dist*closest_row_dist) + (closest_col_dist*closest_col_dist) ) < bug_thresh_squared ) {
+    if ( (closest_col == (num_mem_cols-1)) && (closest_row > (num_mem_rows-3)) ) {
+      closest_row = num_mem_rows-3;
+    }
+    bug.selection_offset_x = (dcol * closest_col) - 0;
+    bug.selection_offset_y = (drow * closest_row) - 0;
+  }
+  draw_computer();
+}
+
+function set_mem ( mouse_down_x, mouse_down_y ) {
+  // Find the memory cell where clicked
+  let dcol = (max_mem_col-min_mem_col) / (num_mem_cols-1);
+  let drow = (max_mem_row-min_mem_row) / (num_mem_rows-1);
+  let mem_x = mouse_down_x - (mem_txt_x_offset+1);
+  let mem_y = mouse_down_y - (mem_txt_y_offset+3);
+  if ( (mem_x > 0) && ((mem_x % dcol) < mem_txt_w) ) {
+    if ( (mem_y > 0) && ((mem_y % drow) < mem_txt_h) ) {
+      let r = Math.floor(mem_y / drow);
+      let c = Math.floor(mem_x / dcol);
+      let index = (17*c) + r;
+      if (index < 100) {
+        let answer = window.prompt ( "Enter a value for memory cell " + index + " (x to clear):" );
+        if (answer != null) {
+          if ( answer.length > 0 ) {
+            if (isNaN(Number(answer))) {
+              mem.mem[index].set_empty();
+            } else {
+              mem.mem[index].set_value ( Number(answer) );
+            }
+            draw_computer();
+          }
+        }
+      }
+    }
+  }
+}
+
+function process_mem_click ( mouse_down_x, mouse_down_y ) {
+  move_bug ( mouse_down_x, mouse_down_y );
+  set_mem ( mouse_down_x, mouse_down_y );
+}
+
+function mouse_down ( event ) {
+  // Flag that the mouse is down and move the tabs
+  offsets = get_offsets ( event );
+  mouse_down_x = offsets[0];
+  mouse_down_y = offsets[1];
+  // Check for the special cases first (accumulator, input, output)
+  if ( (mouse_down_x > acc_x_min) && (mouse_down_x < acc_x_max) &&
+       (mouse_down_y > acc_y_min) && (mouse_down_y < acc_y_max) ) {
+    // This is a click in the accumulator
+    let answer = window.prompt ( "Enter a value for the accumulator:", "" + acc );
+    if (answer != null) {
+      if ( answer.length > 0 ) {
+        if (isNaN(Number(answer.trim()))) {
+          window.alert ( "Your answer (" + answer + ") is not a number." );
+        } else {
+          acc = Number(answer.trim());
+          draw_computer();
+        }
+      }
+    }
+  } else if ( (mouse_down_x > input_x_min) && (mouse_down_x < input_x_max) &&
+              (mouse_down_y > input_y_min) && (mouse_down_y < input_y_max) ) {
+    // This is a click in the input window
+    let answer = window.prompt ( "Enter all input values separated by spaces (x to clear):", ("" + input_slider.slots).replaceAll(',',' ') );
+    if (answer != null) {
+      if (answer.trim().toLowerCase() == 'x') {
+        input_slider.slots = [];
+        input_slider.num_slots_used = 0;
+      } else {
+        answer = answer.replace(/\s+/g,' ').trim().split(' '); // Convert to an array
+        input_slider.slots = [];
+        input_slider.num_slots_used = 0;
+        for (let i=0; i<answer.length; i++) {
+          if (isNaN(Number(answer[i]))) {
+            window.alert ( "Your input (" + answer[i] + ") is not a number." );
+            break;
+          } else {
+            input_slider.slots.push ( Number(answer[i]) );
+            input_slider.num_slots_used += 1;
+          }
+        }
+      }
+      draw_computer();
+    }
+  } else if ( (mouse_down_x > output_x_min) && (mouse_down_x < output_x_max) &&
+              (mouse_down_y > output_y_min) && (mouse_down_y < output_y_max) ) {
+    // This is a click in the output window
+    let answer = window.prompt ( "Enter an output value (x to clear):", ("" + output_slider.slots).replaceAll(',',' ') );
+    if (answer != null) {
+      if ( answer.length > 0 ) {
+        if (answer.trim().toLowerCase() == 'x') {
+          output_slider.slots = [];
+          output_slider.num_slots_used = 0;
+          draw_computer();
+        } else if (isNaN(Number(answer))) {
+          window.alert ( "This output value (" + answer + ") is not a number." );
+        } else {
+          output_slider.slots.push ( Number(answer.trim()) );
+          output_slider.num_slots_used += 1;
+          draw_computer();
+        }
+      }
+    }
+  } else if ( (mouse_down_x > mem_x_min) && (mouse_down_x < mem_x_max) &&
+              (mouse_down_y > mem_y_min) && (mouse_down_y < mem_y_max) ) {
+    // This is a click in the memory window
+    // Convert the memory into a string with underscores for empty
+    let answer = window.prompt ( "Enter all memory values separated by spaces (x to clear):", mem.to_string() );
+    if (answer != null) {
+      answer = answer.trim();
+      if (answer.toLowerCase() == 'x') {
+        mem = new Memory();
+      } else {
+        console.log ( "Loading from " + answer );
+        mem.from_string ( answer );
+        /*
+        answer = answer.replace(/\s+/g,' ').trim().split(' '); // Convert to an array
+        mem.mem = [];
+        // input_slider.num_slots_used = 0;
+        for (let i=0; i<answer.length; i++) {
+          if (isNaN(Number(answer[i]))) {
+            window.alert ( "Your input (" + answer[i] + ") is not a number." );
+            break;
+          } else {
+            let mc = new MemCell();
+            mc.set_value ( Number(answer[i].value) );
+            mem.mem.push ( mc );
+            // input_slider.num_slots_used += 1;
+          }
+        }
+        */
+      }
+      draw_computer();
+    }
+  } else if ( (mouse_down_x > 1090) && (mouse_down_x < 1130) &&
+              (mouse_down_y > 495) && (mouse_down_y < 530) ) {
+    // This is a click in the visibility area - toggle the visibility
+    transparent = !transparent;
+    draw_computer();
+  } else {
+    // Find the active slider
+    if (mouse_down_x > bug.offset_x) {
+      // This is in the memory area so process and redraw
+      active_slider = null;
+      process_mem_click ( mouse_down_x, mouse_down_y );
+      draw_computer();
+    } else if (mouse_down_x > output_slider.offset_x) {
+      active_slider = output_slider;
+    } else if (mouse_down_x > low_addr_slider.offset_x) {
+      active_slider = low_addr_slider;
+    } else if (mouse_down_x > high_addr_slider.offset_x) {
+      active_slider = high_addr_slider;
+    } else if (mouse_down_x > opcode_slider.offset_x) {
+      active_slider = opcode_slider;
+    } else if (mouse_down_x > acc_test_slider.offset_x) {
+      active_slider = acc_test_slider;
+    } else if (mouse_down_x > input_slider.offset_x) {
+      active_slider = input_slider;
+    } else {
+      active_slider = null;
+    }
+    if (active_slider != null) {
+      active_slider.dynamic_y = 0;
+    }
+  }
+  mouse_is_down = true;
+}
+function mouse_movement ( event ) {
+  // Handle mouse movement by dragging when mouse is down
+  if (mouse_is_down) {
+    offsets = get_offsets ( event );
+    if (active_slider != null) {
+      active_slider.dynamic_y = (offsets[1] - mouse_down_y);
+    }
+    draw_computer();
+  }
+}
+function mouse_up ( event ) {
+  // Release the mouse and prepare for another mouse down
+  offsets = get_offsets ( event );
+  if (active_slider != null) {
+    active_slider.offset_y = active_slider.offset_y+active_slider.dynamic_y;
+    active_slider.dynamic_y = 0;
+  }
+  active_slider = null;
+  mouse_is_down = false;
+  draw_computer();
+}
+
+window.onload = reload_page;
+reload_page();
+
+</script>
+
+</head>
+
+<body bgcolor="black" onload="reload_page()">
+
+<center>
+<canvas id="drawing_area" style="image-rendering: crisp-edges;"
+        onmousemove="mouse_movement(event)"
+        onmousedown="mouse_down(event)"
+        onmouseup="mouse_up(event)">
+This browser does not support the HTML5 canvas tag.
+</canvas>
+</center>
+
+</body>
+
+</html>
+
