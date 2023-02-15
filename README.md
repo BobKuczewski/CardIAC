@@ -42,14 +42,17 @@ below or any of the examples available on the Internet.
 
 This tutorial will walk you through writing and executing a simple program
 to add two numbers using CardIAC-B. Most of the important controls are
-exercised in this short demonstration.
+exercised in this short demonstration. Since the "CardIAC" computer is
+always in "single step" mode, this demonstration will involve writing
+portions of the code, executing the portions already written, and then
+adding more code and resuming execution.
 
 ### Pick two numbers and enter them on the "INPUT Card"
 
 Start by picking two numbers to add. We'll use 14 and 28 (following the
 example by Ben Eater at https://youtu.be/35zLnS3fXeA).
 
-Click on the word "INPUT" in the lower left corner of the screen and a
+Click on the word "INPUT" in the lower left corner of the screen. A
 pop-up box should appear. The pop-up box will ask for all input values
 separated by spaces. Enter "14 28" and click OK. Those two numbers should
 appear at the bottom of the "INPUT" slider. The input numbers may be
@@ -59,11 +62,11 @@ set to showing position number 1 (which should be 14).
 
 ### Allocating Storage for Variables
 
-Next begin entering a program. The program will need storage space
-(addresses) for our two input values. We can pick almost any of the 100
-available memory cell addresses. It's sometimes convenient to start with
-51 since that's half-way through the available memory and happens to start
-with a "1" (easy to remember) and is in the top row. So let's assign the
+Next we'll begin entering a program to add the two numbers. The program will need
+storage space (addresses) for those two input values. We can pick almost any of
+the 100 available memory cell addresses. It's sometimes convenient to start
+with 51 since that's half-way through the available memory and happens to start
+with a "1" (easy to remember) and is on the top row. So let's assign the
 first input value to be stored at 51 and the second to be stored at 52.
 
 ### First "Line" of Code
@@ -71,7 +74,7 @@ first input value to be stored at 51 and the second to be stored at 52.
 Now that we have our addresses we can write our first line of code. We will
 want to load the first input card into memory cell 51. The instruction to do
 that is "IN 51". In "machine code" that will be "051" (where 0 is the input
-instruction, and 51 is the memory cell to get the value. Let's put that
+instruction, and 51 is the memory cell to put the value). Let's put that
 instruction in Memory Cell 00. Click on the yellow rectangle at cell 00 and
 you will get a prompt that says "Enter a value for memory cell 0". Type in
 "051" and click OK. That's our first line of code!
@@ -100,7 +103,8 @@ So the "OP CODE" slider should be slid up or down until the first digit in the
 all the way down until the 0 appears. Similarly slide the "HI ADDR" and "LO ADDR"
 sliders until "051" appears in the "INSTRUCTION REGISTER". Doing this is essentially
 the "fetch" portion of a normal computer instruction cycle. Before it can do anything,
-a computer needs to "fetch" its first instruction from memory.
+a computer needs to "fetch" its first instruction (and all subsequent instructions)
+from memory.
 
 ### "Running" the First Program - Execute portion of First Instruction
 
@@ -110,6 +114,8 @@ arrows of the flow diagram. The "INSTRUCTION REGISTER" only has one arrow leavin
 it, and it goes to the next step which is "MOVE BUG AHEAD ONE CELL". This simulates
 the advance of the program counter for a normal processor. Go ahead and click on
 the small round "hole" for Memory Cell 01. The "bug" should move forward to that hole.
+Advancing the "bug" (program counter) will be the first step in executing any
+instruction on this computer.
 
 After moving the "bug" forward (advancing the program counter), the flow diagram
 points upward to the instructions in the "ACCUMULATOR TEST" window. In this case
@@ -120,7 +126,7 @@ the first of our two numbers to add. So the "INPUT CARD" is NOT blank. So we tak
 
 The arrow from the "NO" path of the "ACCUMULATOR TEST" question leads upward to an
 instruction that says "COPY INPUT CARD INTO CELL 51 AND ADVANCE CARD". So that's what
-you'll do. You can see that the input card contains "14" so click on Memory Cell 51
+you'll do next. You can see that the input card contains "14" so click on Memory Cell 51
 and enter "14" and then click "OK". The number 14 should appear in Cell 51. But don't
 forget the second part of that instruction: "ADVANCE CARD". In other words, slide the
 "INPUT" slider downward (click and drag on the upper part of the slider) until the
@@ -155,7 +161,7 @@ At this point, we have followed 2 instructions. We've moved the values from 2 in
 into 2 locations in memory. But the instruction pointer (the "bug") is now pointing to an
 empty cell. In a real computer, there are no empty cells. Every location in memory always
 has *something* in it. Each bit will be either a 0 or a 1. But in CardIAC any "undefined"
-memory locations (and input cards) will be empty. But that turns out to be handy in this
+memory locations (and input cards) will be empty. That turns out to be fine in this
 case because we can continue to write instructions while the "computer" is on hold waiting
 to fetch the next instruction (that isn't there yet).
 
@@ -188,11 +194,11 @@ Cell 03 to move the bug forward.
 ### Moving Memory into the Accumulator
 
 Now the flow diagram leads upward to the instructions that tell us to "COPY CONTENTS OF CELL 51
-INTO ACCUMULATOR". So we look at Memory Cell 51 and see that it contains "014" (14). So we click
-on the numbers in the "ACCUMULATOR" (likely all 0's) and that will bring up a dialog box asking
-"Enter a value for the accumulator:". Type in "14" and click "OK". The "ACCUMULATOR" should now
-show the number "14". We can now follow the flow diagram back to the "INSTRUCTION REGISTER" for
-our next "fetch" cycle.
+INTO ACCUMULATOR". So we look at Memory Cell 51 and see that it contains "014" (14). Next, we click
+on either the word "ACCUMULATOR" or the numbers in the ACCUMULATOR (likely all 0's) and that will
+bring up a dialog box asking "Enter a value for the accumulator:". Type in "14" and click "OK".
+The "ACCUMULATOR" should now show the number "0014". We can now follow the flow diagram back to
+the "INSTRUCTION REGISTER" for our next "fetch" cycle.
 
 ### Fetching the ADD Instruction
 
@@ -205,11 +211,11 @@ need to be moved.
 
 Now that the computer has "fetched" the next instruction ("252") it's time to execute it.
 Following the flow diagram out the left side of the "INSTRUCTION REGISTER" we find that we must
-again move the bug ahead one cell. So click the small "hole" on Memory Cell 04 to advance the bug.
-Then follow the flow diagram up to the top where it says "ADD CONTENTS OF CELL 52 INTO ACCUMULATOR".
+again (as always) move the bug ahead one cell. So click the small "hole" on Memory Cell 04 to advance the
+bug. Then follow the flow diagram up to the top where it says "ADD CONTENTS OF CELL 52 INTO ACCUMULATOR".
 Since the value in cell 52 is "28" and the value in the ACUMULATOR is "14", the sum of those should be 42.
 Of course a real computer would do that addition for us, and there is probably a way to make an adding
-machine out of cardboard (similar to a slide rule). But CardIAC demonstrates the floa and processing
+machine out of cardboard (similar to a slide rule). But CardIAC demonstrates the flow and processing
 of instructions ... and leaves the math up to us. So we need to put "42" into the ACCUMULATOR. Once
 again click on the ACCUMULATOR and enter "42" in the pop-up dialog, and click OK.
 
@@ -237,7 +243,7 @@ will need to store ("STO") from the Accumulator into memory location 53, and the
 As before, the computer has been patiently waiting while we added some more instructions for it to
 follow. So now we're ready to pick up where it left off. We're looking at the "INSTRUCTION REGISTER"
 and we see that it again says "MOVE SLIDES TO AGREE WITH CONTENTS OF BUG'S CELL". The bug's cell
-currently shows the instruction "653" so adjust the sliders to show "653" in the instruction window.
+currently shows the newly added instruction "653" so adjust the sliders to show "653" in the instruction window.
 In this case you'll need to move the "OP CODE" slider and the "ADDR LO" slider. Once the new instruction
 ("653") is in the INSTRUCTION REGISTER, the flow diagram reminds us to "MOVE BUG AHEAD ONE CELL", so
 click on the round "hole" for Memory Cell 05 to move the "bug". Then follow the flow diagram up to the
@@ -301,22 +307,22 @@ The previous example provides most of the information needed to operate CardIAC-
 
 ### Managing Input and Output
 
-Input data and output data are handled as "cards" by CardIAC. In the old days, cards were a common form of interaction with a computer and a program (as well as input data) would often be entered as a series (or "deck") of punched cards. The Input and Output sliders reflect that perspective and that's why they have the upper left corner "cut off" to look like very small punch cards.
+Input data and output data are handled as "cards" by CardIAC. In the old days, cards were a common form of interaction with a computer and a program (as well as input data) would often be entered as a series (or "deck") of punched cards. The Input and Output sliders reflect that perspective and that's why they have the upper left corner "cut off" in each cell to look like a series of very small punch cards.
 
-Data is loaded into these cards by clicking on the words "INPUT" or "OUTPUT". Both will bring up a dialog box showing the current data and the ability to enter data. But the data for input and output differ. The data entered for input can contain multiple space-separated values, and those values will replace the **entire** set of "cards" on the slider. But placing data on the output card should only happen through the "OUT" instruction. As a result, new values are entered on to the Output cards one at a time as directed by the program. So there should be no need to enter multiple values at once for Output. Both dialog boxes provide an option to clear the entire card with a single "x" as input. In all cases, it can be helpful to use your computer's cut, copy, and paste features to save and restore copies of the input and output cards as needed. Clicking on either the "INPUT" or "OUTPUT" will initially show all of the data for those cards for easy copying and saving.
+Data is loaded into these cards by clicking on the words "INPUT" or "OUTPUT". Both will bring up a dialog box showing the current data and both will offer the opportunity to enter data. But the data for input and output differ. The data entered for input can contain multiple space-separated values, and those values will replace the **entire** set of "cards" on the slider. But placing data on the output card should only happen through the "OUT" instruction, and the "OUT" instruction for CardIAC can only output one value at a time. As a result, new values are entered onto the Output cards one at a time as directed by the program. So there should be no need to enter multiple values at once for Output. Both dialog boxes provide an option to clear the entire card with a single "x" as input. In all cases, it can be helpful to use your computer's cut, copy, and paste features to save and restore copies of the input and output cards as needed. Clicking on either the "INPUT" or "OUTPUT" will initially show all of the data for those cards for easy copying and saving.
 
 ### The Accumulator
 
-The Accumulator is really just a place to store a number. The value entered there is not used by CardIAC-B in any way other than to ask you (the real brains of the operation) to change it appropriately. You can change the Accumulator by clicking on the word "ACCUMULATOR" or the box that holds the number.
+The Accumulator is really just a place to store a number. The value entered there is not used by CardIAC-B in any way other than to ask you (the real brains of the operation) to change it appropriately. You can change the Accumulator by clicking on the word "ACCUMULATOR" or the box that holds the number. A dialog box will come up where you can enter the value to be stored in the Accumulator.
 
 ### The "Bug" (Program Counter)
 
-As with the Accumulator, the "Bug" is not used by CardIAC-B in any way other than to ask you (again, the real brains of the operation) to use it as a reference for fetching instructions. You can change the location of the "Bug" by clicking on the small circles at each location of the memory. In the original "CardIAC", those circles were holes where the "Bug" could be slid to keep track of the next program instruction.
+As with the Accumulator, the "Bug" is not used by CardIAC-B in any way other than to ask you (again, the real brains of the operation) to use it as a reference for fetching instructions. You can change the location of the "Bug" by clicking on the small circles at each location of the memory. In the original "CardIAC", those circles were holes where the paper "Bug" could be slid to keep track of the next program instruction.
 
 ### Memory - Individual Cells and Bulk Reading and Writing
 
-The memory of CardIAC is used for storing both programs and data. In fact, program instructions can be read (as data) and data can be executed (as program instructions). Keeping all of this straight is the job of the programmer (you). Memory is normally changed by clicking on the yellow rectangle in each memory cell. This will bring up a dialog box giving you the option to change the value or clear it completely (with an "x"). This is sufficient for small programs, but would be extremely tedious for large programs (of course, executing large programs would be even *more* tedious). So CardIAC-B has a mechanism for bulk reading and writing of memory. If you click on either of the words "MEMORY" or "CELLS" above the memory area, you will get a pop-up dialog box containing all of the space separated values currently in memory. Any blank cells will be represented with a single underscore ("_"). This allows you to copy and paste all of memory at once. It also allows you to copy and paste to restore all of memory at once. Finally, this makes it relatively easy to shift sections of memory by inserting or deleting cell values in the list.
+The memory of CardIAC is used for storing both programs and data. In fact, program instructions can be read (as data) and data can be executed (as program instructions). Keeping all of this straight is the job of the programmer (you). Memory is normally changed by clicking on the yellow rectangle in each memory cell. This will bring up a dialog box giving you the option to change the value or clear it completely (with an "x"). This is sufficient for small programs, but would be extremely tedious for large programs (of course, executing large programs on CardIAC would be even *more* tedious). So CardIAC-B has a mechanism for bulk reading and writing of memory. If you click on either of the words "MEMORY" or "CELLS" above the memory area, you will get a pop-up dialog box containing all of the space separated values currently in memory. Any blank cells will be represented with a single underscore ("_"). This feature allows you to copy all of memory at once as a string and paste it into some other application (like a text editor) to save it. It also allows you to paste a string (copied from another application) to restore all of memory at once. The ability to edit all of memory at once makes it relatively easy to shift sections of memory by inserting or deleting cell values in the text string representing the memory.
 
 ### Behind the Curtain
 
-The original CardIAC computer was a very very clever idea, and it surely took considerable thought and effort to make all the sliders work in conjunction with each other to produce a "working" computer. CardIAC-B allows you to see the movement of these sliders by toggling on the "bell" in the lower right corner. This essentially replaces the front panel with a transparent image that lets you see the sliders moving. The transparent image also shows the locations of the cutouts of the normal front panel for reference. Additionally, when in "transparent" mode, the sliders change color so they can be differentiated (since they have no borders and would otherwise blend together).
+The original CardIAC computer was a very very clever idea, and it surely took considerable thought and effort to make all the sliders work in conjunction with each other to produce a "working" computer. CardIAC-B allows you to see the movement of those sliders by toggling on the "bell" in the lower right corner. This essentially replaces the front panel with a transparent image that lets you see the sliders moving. The transparent image also shows the locations of the cutouts of the normal front panel for reference. Additionally, when in "transparent" mode, the sliders change color so they can be differentiated (since they have no borders and would otherwise blend together).
