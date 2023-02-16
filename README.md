@@ -34,7 +34,7 @@ This repository only contains a few files. There is one HTML file, one "README" 
 (the source of this page) and several image files. The HTML file contains the Javascript
 that loads the images and provides for input, output, and movement of the images on the
 page. Simply download those files to any location on your computer and open the only HTML
-file (cardiac_b.html) with a web browser (usually by double clicking on it). That
+file (index.html) with a web browser (usually by double clicking on it). That
 should bring up a page similar to the image above. Then follow along with the example
 below or any of the examples available on the Internet.
 
