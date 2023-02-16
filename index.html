@@ -315,65 +315,65 @@ class DataCard extends SlidingImage {
   }
 }
 
-var io_cover = new SlidingImage ( "io_cover", 'IOCOV.png', io_cover_x, io_cover_y, io_cover_min_y, io_cover_max_y, 0 );
+var io_cover = new SlidingImage ( "io_cover", 'images/IOCOV.png', io_cover_x, io_cover_y, io_cover_min_y, io_cover_max_y, 0 );
 io_cover.image.onload = function () { io_cover.image_loaded = true; };
 io_cover.image.src = io_cover.image_name;
 
-var output_slider = new DataCard ( "output", 'INOUT.png', output_slider_x, output_slider_y, output_slider_min_y, output_slider_max_y, 24 );
+var output_slider = new DataCard ( "output", 'images/INOUT.png', output_slider_x, output_slider_y, output_slider_min_y, output_slider_max_y, 24 );
 output_slider.image.onload = function () { output_slider.image_loaded = true; };
 output_slider.image.src = output_slider.image_name;
 
-var input_slider = new DataCard ( "input", 'INOUT.png', input_slider_x, input_slider_y, input_slider_min_y, input_slider_max_y, 24 );
+var input_slider = new DataCard ( "input", 'images/INOUT.png', input_slider_x, input_slider_y, input_slider_min_y, input_slider_max_y, 24 );
 input_slider.image.onload = function () { input_slider.image_loaded = true; };
 input_slider.image.src = input_slider.image_name;
 
-var low_addr_slider = new SlidingImage ( "low_addr", 'ADDR_LO.png', low_addr_slider_x, low_addr_slider_y, low_addr_slider_min_y, low_addr_slider_max_y, 10 );
+var low_addr_slider = new SlidingImage ( "low_addr", 'images/ADDR_LO.png', low_addr_slider_x, low_addr_slider_y, low_addr_slider_min_y, low_addr_slider_max_y, 10 );
 low_addr_slider.image.onload = function () { low_addr_slider.image_loaded = true; };
 low_addr_slider.image.src = low_addr_slider.image_name;
-low_addr_slider.transp_image_name = "ADDR_LO_Blue.png";
+low_addr_slider.transp_image_name = "images/ADDR_LO_Blue.png";
 low_addr_slider.transp_image.onload = function () { console.log("Loaded Transp"); low_addr_slider.transp_loaded = true; };
 low_addr_slider.transp_image.src = low_addr_slider.transp_image_name;
 
-var high_addr_slider = new SlidingImage ( "high_addr", 'ADDR_HI.png', high_addr_slider_x, high_addr_slider_y, high_addr_slider_min_y, high_addr_slider_max_y, 10 );
+var high_addr_slider = new SlidingImage ( "high_addr", 'images/ADDR_HI.png', high_addr_slider_x, high_addr_slider_y, high_addr_slider_min_y, high_addr_slider_max_y, 10 );
 high_addr_slider.image.onload = function () { console.log("Loaded Normal");  high_addr_slider.image_loaded = true; };
 high_addr_slider.image.src = high_addr_slider.image_name;
-high_addr_slider.transp_image_name = "ADDR_HI_Pink.png";
+high_addr_slider.transp_image_name = "images/ADDR_HI_Pink.png";
 high_addr_slider.transp_image.onload = function () { console.log("Loaded Transp"); high_addr_slider.transp_loaded = true; };
 high_addr_slider.transp_image.src = high_addr_slider.transp_image_name;
 
-var opcode_slider = new SlidingImage ( "opcode", 'OPCODE.png', opcode_slider_x, opcode_slider_y, opcode_slider_min_y, opcode_slider_max_y, 10 );
+var opcode_slider = new SlidingImage ( "opcode", 'images/OPCODE.png', opcode_slider_x, opcode_slider_y, opcode_slider_min_y, opcode_slider_max_y, 10 );
 opcode_slider.image.onload = function () { opcode_slider.image_loaded = true; };
 opcode_slider.image.src = opcode_slider.image_name;
 
-var acc_test_slider = new SlidingImage ( "acc_test", 'ACC.png', acc_test_slider_x, acc_test_slider_y, acc_test_slider_min_y, acc_test_slider_max_y, 2 );
+var acc_test_slider = new SlidingImage ( "acc_test", 'images/ACC.png', acc_test_slider_x, acc_test_slider_y, acc_test_slider_min_y, acc_test_slider_max_y, 2 );
 acc_test_slider.image.onload = function () { acc_test_slider.image_loaded = true; };
 acc_test_slider.image.src = acc_test_slider.image_name;
-acc_test_slider.transp_image_name = "ACC_Green.png";
-acc_test_slider.transp_image.onload = function () { console.log("Loaded Transp"); acc_test_slider.transp_loaded = true; };
+acc_test_slider.transp_image_name = "images/ACC_Green.png";
+acc_test_slider.transp_image.onload = function () { acc_test_slider.transp_loaded = true; };
 acc_test_slider.transp_image.src = acc_test_slider.transp_image_name;
 
-var bug = new SlidingImage ( "bug", 'BUG.png', bug_slider_x, bug_slider_y, bug_slider_min_y, bug_slider_max_y, 0 );
+var bug = new SlidingImage ( "bug", 'images/BUG.png', bug_slider_x, bug_slider_y, bug_slider_min_y, bug_slider_max_y, 0 );
 bug.image.onload = function () { bug.image_loaded = true; };
 bug.image.src = bug.image_name;
 
 
-var computer_image_name = 'COMP.png';
+var computer_image_name = 'images/COMP.png';
 var computer_image = new Image();
 var computer_image_loaded = false;
 
-var trans_comp_image_name = 'COMP_X.png';
+var trans_comp_image_name = 'images/COMP_X.png';
 var trans_comp_image = new Image();
 var trans_comp_image_loaded = false;
 
-var trans_addrhi_image_name = 'ADDR_HI_Pink.png';
+var trans_addrhi_image_name = 'images/ADDR_HI_Pink.png';
 var trans_addrhi_image = new Image();
 var trans_addrhi_image_loaded = false;
 
-var trans_addrlo_image_name = 'ADDR_LO_Blue.png';
+var trans_addrlo_image_name = 'images/ADDR_LO_Blue.png';
 var trans_addrlo_image = new Image();
 var trans_addrlo_image_loaded = false;
 
-var trans_acc_image_name = 'ACC_Green.png';
+var trans_acc_image_name = 'images/ACC_Green.png';
 var trans_acc_image = new Image();
 var trans_acc_image_loaded = false;
 
