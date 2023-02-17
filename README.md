@@ -244,10 +244,10 @@ will need to store ("STO") from the Accumulator into memory location 53, and the
 As before, the computer has been patiently waiting while we added some more instructions for it to
 follow. So now we're ready to pick up where it left off. We're looking at the "INSTRUCTION REGISTER"
 and we see that it again says "MOVE SLIDES TO AGREE WITH CONTENTS OF BUG'S CELL". The bug's cell
-currently shows the newly added instruction "653" so adjust the sliders to show "653" in the instruction window.
-In this case you'll need to move the "OP CODE" slider and the "ADDR LO" slider. Once the new instruction
-("653") is in the INSTRUCTION REGISTER, the flow diagram reminds us to "MOVE BUG AHEAD ONE CELL", so
-click on the round "hole" for Memory Cell 05 to move the "bug". Then follow the flow diagram up to the
+currently shows the newly added instruction "653" so adjust the sliders to show "653" in the instruction
+window. In this case you'll need to move the "OP CODE" slider and the "ADDR LO" slider. Once the new
+instruction ("653") is in the INSTRUCTION REGISTER, the flow diagram reminds us to "MOVE BUG AHEAD ONE CELL",
+so click on the round "hole" for Memory Cell 05 to move the "bug". Then follow the flow diagram up to the
 line that tells you to "COPY ACCUMULATOR TO CELL 53". You'll notice that the ACCUMULATOR shows "42" so
 click on the yellow rectangle in memory cell 53 and type in "42" and click "OK".
 
