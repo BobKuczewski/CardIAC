@@ -63,9 +63,9 @@ set to showing position number 1 (which should be 14).
 
 ### Allocating Storage for Variables
 
-Next we'll begin entering a program to add the two numbers. The program will need
-storage space (addresses) for those two input values. We can pick almost any of
-the 100 available memory cell addresses. It's sometimes convenient to start
+Next we'll begin entering a program to add the two numbers. The program will
+need storage space (addresses) for those two input values. We can pick almost
+any of the 100 available memory cell addresses. It's sometimes convenient to start
 with 51 since that's half-way through the available memory and happens to start
 with a "1" (easy to remember) and is on the top row. So let's assign the
 first input value to be stored at 51 and the second to be stored at 52.
