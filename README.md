@@ -288,11 +288,12 @@ can finally ... stop.
 
 ### Do it Again?
 
-Once the program has been written and entered (as it has been in this tutorial), new input values can be entered, and the
-program can be run again. Indeed, with a few small changes, this program could loop back to the beginning and continue to
-add pairs of numbers (taking them from the input cards) and produce a list of sums (to the output cards). But that's
-not really the best use of this "virtual cardboard" computer. The best use is to understand the fundamental notions of how a
-set of stored computer instructions can be cycled through a very simple machine to process data (including input and output).
+Once the program has been written and entered (as it has been in this tutorial), new input values can
+be entered, and the program can be run again. Indeed, with a few small changes, this program could loop
+back to the beginning and continue to add pairs of numbers (taking them from the input cards) and produce
+a list of sums (to the output cards). But that's not really the best use of this "virtual cardboard"
+computer. The best use is to understand the fundamental notions of how a set of stored computer
+instructions can be cycled through a very simple machine to process data (including input and output).
 That's what computers do ... all day and all night.
 
 ### Macro Instructions and Micro Instructions
