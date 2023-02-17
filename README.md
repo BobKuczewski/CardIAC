@@ -298,10 +298,10 @@ That's what computers do ... all day and all night.
 
 ### Macro Instructions and Micro Instructions
 
-The instructions of CardIAC (such as IN, STO, ADD, SUB, JMP) are very similar to the instructions of real computers.
-But CardIAC goes one level deeper and shows how each of those "macro" instructions are made up of several "micro-instructions"
-such as "fetch an instruction", "increment the program counter", and "move" data. The process is certainly tedious, but it
-demonstrates the building blocks of all modern digital computers.
+The instructions of CardIAC (such as IN, STO, ADD, SUB, JMP) are very similar to the instructions of real
+computers. But CardIAC goes one level deeper and shows how each of those "macro" instructions are made up
+of several "micro-instructions" such as "fetch an instruction", "increment the program counter", and "move"
+data. The process is certainly tedious, but it demonstrates the building blocks of all modern digital computers.
 
 ## Additional Features of CardIAC-B
 
