@@ -37,7 +37,11 @@ and movement of the images on the page.
 Simply download those files to any location on your computer and open the only HTML
 file (index.html) with a web browser (usually by double clicking on it). That
 should bring up a page similar to the image above. Then follow along with the example
-below or any of the examples available on the Internet.
+below or any of the examples available on the Internet. Alternatively, you can
+also click on **[this link](https://bobkuczewski.github.io/CardIAC-B/)** to open
+an on-line version of CardIAC-B. It's best to move that page to a separate
+browser window so you can easily switch between these instructions and that
+computer simulation.
 
 ## Simple Programming Example - Add two numbers (the hard way)
 
