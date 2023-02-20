@@ -365,10 +365,6 @@ var io_cover_image_name = 'images/IOCOV.png';
 var io_cover_image = new Image();
 var io_cover_image_loaded = false;
 
-var trans_io_cover_image_name = 'images/IOCOV_X.png';
-var trans_io_cover_image = new Image();
-var trans_io_cover_image_loaded = false;
-
 var trans_addrhi_image_name = 'images/ADDR_HI_Pink.png';
 var trans_addrhi_image = new Image();
 var trans_addrhi_image_loaded = false;
@@ -400,25 +396,23 @@ function draw_computer() {
 
     // Draw the computer (in front of all sliders)
     if (transparent) {
+      // Draw the input/output sliders on top of the computer
+      input_slider.draw(ctxt);
+      output_slider.draw(ctxt);
+      // Draw the transparent layer over everything
       if (trans_comp_image_loaded) {
         ctxt.drawImage(trans_comp_image,0,0);
       }
     } else {
+      // Draw the computer first
       if (computer_image_loaded) {
         ctxt.drawImage(computer_image,0,0);
       }
-    }
+      // Draw the input/output sliders on top of the computer
+      input_slider.draw(ctxt);
+      output_slider.draw(ctxt);
 
-    // Draw the input/output sliders on top of the computer
-    input_slider.draw(ctxt);
-    output_slider.draw(ctxt);
-
-    // Draw the input/output cover on top of the input/output sliders
-    if (transparent) {
-      if (trans_io_cover_image_loaded) {
-        ctxt.drawImage(trans_io_cover_image,0,0);
-      }
-    } else {
+      // Draw the input/output cover on top of the input/output sliders
       if (io_cover_image) {
         ctxt.drawImage(io_cover_image,0,0);
       }
@@ -461,13 +455,6 @@ function reload_page() {
       draw_computer();
     };
     io_cover_image.src = io_cover_image_name;
-
-    trans_io_cover_image.onload = function () {
-      trans_io_cover_image_loaded = true;
-      draw_computer();
-    };
-    trans_io_cover_image.src = trans_io_cover_image_name;
-
   }
 }
 
