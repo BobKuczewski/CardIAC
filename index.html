@@ -315,10 +315,6 @@ class DataCard extends SlidingImage {
   }
 }
 
-var io_cover = new SlidingImage ( "io_cover", 'images/IOCOV.png', io_cover_x, io_cover_y, io_cover_min_y, io_cover_max_y, 0 );
-io_cover.image.onload = function () { io_cover.image_loaded = true; };
-io_cover.image.src = io_cover.image_name;
-
 var output_slider = new DataCard ( "output", 'images/INOUT.png', output_slider_x, output_slider_y, output_slider_min_y, output_slider_max_y, 24 );
 output_slider.image.onload = function () { output_slider.image_loaded = true; };
 output_slider.image.src = output_slider.image_name;
@@ -365,6 +361,14 @@ var trans_comp_image_name = 'images/COMP_X.png';
 var trans_comp_image = new Image();
 var trans_comp_image_loaded = false;
 
+var io_cover_image_name = 'images/IOCOV.png';
+var io_cover_image = new Image();
+var io_cover_image_loaded = false;
+
+var trans_io_cover_image_name = 'images/IOCOV_X.png';
+var trans_io_cover_image = new Image();
+var trans_io_cover_image_loaded = false;
+
 var trans_addrhi_image_name = 'images/ADDR_HI_Pink.png';
 var trans_addrhi_image = new Image();
 var trans_addrhi_image_loaded = false;
@@ -409,8 +413,16 @@ function draw_computer() {
     input_slider.draw(ctxt);
     output_slider.draw(ctxt);
 
-    // Draw the input/output cover on top of the sliders
-    io_cover.draw(ctxt);
+    // Draw the input/output cover on top of the input/output sliders
+    if (transparent) {
+      if (trans_io_cover_image_loaded) {
+        ctxt.drawImage(trans_io_cover_image,0,0);
+      }
+    } else {
+      if (io_cover_image) {
+        ctxt.drawImage(io_cover_image,0,0);
+      }
+    }
 
     // Draw the memory
     mem.draw(ctxt);
@@ -443,6 +455,18 @@ function reload_page() {
       draw_computer();
     };
     trans_comp_image.src = trans_comp_image_name;
+
+    io_cover_image.onload = function () {
+      io_cover_image_loaded = true;
+      draw_computer();
+    };
+    io_cover_image.src = io_cover_image_name;
+
+    trans_io_cover_image.onload = function () {
+      trans_io_cover_image_loaded = true;
+      draw_computer();
+    };
+    trans_io_cover_image.src = trans_io_cover_image_name;
 
   }
 }
