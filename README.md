@@ -180,7 +180,8 @@ to fetch the next instruction (that isn't there yet).
 ### The Accumulator and Instructions for Loading and Adding
 
 Now that we have our two input values in memory, we can write a few more instructions to
-add them together. This is where the "Accumulator" comes in. Most computers have one (or more)
+add them together. This is where the "Accumulator" comes in (the "ACCUMULATOR" is found in
+the lower left quadrant of the CardIAC-B screen). Most computers have one (or more)
 internal registers that can serve as "accumulators" where values can be loaded or manipulated.
 In CardIAC, values can be loaded into the Accumulator from memory, and values can be added to
 the Accumulator from memory. Those two steps are done with instructions "LD" (for loading) and
