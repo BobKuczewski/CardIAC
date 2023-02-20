@@ -26,7 +26,7 @@ instructions.
 
 ## ["Virtual Cardboard" Version](https://bobkuczewski.github.io/CardIAC-B/)
 
-![Screen Shot](/CardIAC_at_Startup.png?raw=true "Startup Screen")
+![Screen Shot](/images/CardIAC_at_Startup.png?raw=true "Startup Screen")
 
 ## Using CardIAC-B
 
