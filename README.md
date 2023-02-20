@@ -54,7 +54,9 @@ adding more code and resuming execution. Before you begin, open either your
 downloaded version or **[this page](https://bobkuczewski.github.io/CardIAC-B/)**
 in another browser window. Arrange that window (as well as you can) so you can
 follow these instructions while still seeing that other window as
-large as possible. You might even print these instructions on paper
+large as possible. If needed, you can slide most of the "Memory Cells" off
+the right edge of your screen since this tutorial only uses up to the
+column starting with 51. You might even print these instructions on paper
 so that you can view the other window in full-screen mode.
 
 ### Pick two numbers and enter them on the "INPUT Card"
