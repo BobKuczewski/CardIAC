@@ -43,15 +43,15 @@ below or any of the examples available on the Internet.
 
 This tutorial will walk you through writing and executing a simple program
 to add two numbers using CardIAC-B. Most of the important controls are
-exercised in this short demonstration. Since the "CardIAC" computer is
+exercised in this "short" demonstration. Since the "CardIAC" computer is
 always in "single step" mode, this demonstration will involve writing
 portions of the code, executing the portions already written, and then
-adding more code and resuming execution. Before you begin, open
-**[this page](https://bobkuczewski.github.io/CardIAC-B/)** in another
-browser window. Arrange that window (as well as you can) so you can
+adding more code and resuming execution. Before you begin, open either your
+downloaded version or **[this page](https://bobkuczewski.github.io/CardIAC-B/)**
+in another browser window. Arrange that window (as well as you can) so you can
 follow these instructions while still seeing that other window as
 large as possible. You might even print these instructions on paper
-so that you can view the other window on your entire screen.
+so that you can view the other window in full-screen mode.
 
 ### Pick two numbers and enter them on the "INPUT Card"
 
